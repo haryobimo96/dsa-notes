@@ -1,6 +1,8 @@
 package com.haryodsanotes.bfsdfs.services;
 
+import com.haryodsanotes.bfsdfs.exceptions.MatrixDimensionException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -64,4 +66,20 @@ public class AdjacencyBFSServiceTest {
             Assertions.assertEquals(expectedResult.get(i), result.get(i));
         }
     }
+
+    @Test
+    void checkInvalidInputsInAdjacencyBFSFunctionCall() {
+        Assertions.assertThrows(
+                MatrixDimensionException.class,
+                () -> adjacencyBFSService.traverseBfsResult(-5, List.of(List.of(1))));
+        Assertions.assertThrows(
+                MatrixDimensionException.class,
+                () -> adjacencyBFSService.traverseBfsResult(2, List.of(List.of(1))));        Assertions.assertThrows(
+                MatrixDimensionException.class,
+                () -> adjacencyBFSService.traverseBfsResult(0, null));
+        Assertions.assertThrows(
+                MatrixDimensionException.class,
+                () -> adjacencyBFSService.traverseBfsResult(0, List.of(List.of(1, 2), List.of(1))));
+    }
+
 }

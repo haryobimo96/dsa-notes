@@ -14,7 +14,7 @@ public class BaseService {
     public void validateInput(Integer startIdx, List<List<Integer>> matrix) {
         if (!MatrixCheckerHelper.isAdjacencyMatrixValid(matrix))
             throw new MatrixDimensionException(ExceptionMessage.ADJACENCY_MATRIX_INVALID_DIMENSION);
-        if (matrix.size() <= startIdx)
+        if (matrix.size() <= startIdx || startIdx < 0)
             throw new MatrixDimensionException(ExceptionMessage.ADJACENCY_MATRIX_INPUT_OUT_OF_BOUND);
     }
 }
