@@ -1,7 +1,9 @@
 package com.haryodsanotes.bfsdfs.controllers;
 
 import com.haryodsanotes.bfsdfs.constants.ApiPath;
+import com.haryodsanotes.bfsdfs.constants.ExceptionMessage;
 import com.haryodsanotes.bfsdfs.services.ProblemsService;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,13 +21,13 @@ public class ProblemsController {
 
     @PostMapping(value = ApiPath.SUB_PATH_BFS)
     public ResponseEntity<List<Integer>> traverseBfs(
-            @RequestBody List<List<Integer>> input) {
+            @RequestBody @NotEmpty(message = ExceptionMessage.ADJACENCY_MATRIX_EMPTY) List<List<Integer>> input) {
         return ResponseEntity.ok(List.of());
     }
 
     @PostMapping(value = ApiPath.SUB_PATH_DFS)
     public ResponseEntity<List<Integer>> traverseDfs(
-            @RequestBody List<List<Integer>> input) {
+            @RequestBody @NotEmpty(message = ExceptionMessage.ADJACENCY_MATRIX_EMPTY) List<List<Integer>> input) {
         return ResponseEntity.ok(List.of());
     }
 }

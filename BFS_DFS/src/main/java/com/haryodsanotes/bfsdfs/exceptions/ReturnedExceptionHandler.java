@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ReturnedExceptionHandler {
     @ExceptionHandler(MatrixDimensionException.class)
     public ResponseEntity<String> handleMatrixDimensionException(MatrixDimensionException ex) {
+        log.warn("Invalid matrix dimension");
         return ResponseEntity.badRequest().body(ex.getMessage());
     }
 }
