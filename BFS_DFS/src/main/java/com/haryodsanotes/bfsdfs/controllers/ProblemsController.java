@@ -1,11 +1,11 @@
 package com.haryodsanotes.bfsdfs.controllers;
 
 import com.haryodsanotes.bfsdfs.constants.ApiPath;
-import com.haryodsanotes.bfsdfs.constants.ExceptionMessage;
-import com.haryodsanotes.bfsdfs.services.ProblemsService;
-import jakarta.validation.constraints.NotEmpty;
+import com.haryodsanotes.bfsdfs.dtos.AdjacencyBaseRequest;
+import com.haryodsanotes.bfsdfs.services.AdjacencyBFSService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,17 +17,18 @@ import java.util.List;
 @RequestMapping(path = ApiPath.BFS_DFS)
 @RequiredArgsConstructor
 public class ProblemsController {
-    private final ProblemsService problemsService;
+    private final AdjacencyBFSService adjacencyBfsService;
 
-    @PostMapping(value = ApiPath.SUB_PATH_BFS)
+    @PostMapping(value = ApiPath.SUB_PATH_ADJACENCY_BFS)
     public ResponseEntity<List<Integer>> traverseBfs(
-            @RequestBody @NotEmpty(message = ExceptionMessage.ADJACENCY_MATRIX_EMPTY) List<List<Integer>> input) {
-        return ResponseEntity.ok(List.of());
+            @RequestBody @Validated AdjacencyBaseRequest request) {
+        return ResponseEntity.ok(
+                adjacencyBfsService.traverseBfsResult(request.getStartIdx(), request.getMatrix()));
     }
 
-    @PostMapping(value = ApiPath.SUB_PATH_DFS)
+    @PostMapping(value = ApiPath.SUB_PATH_ADJACENCY_DFS)
     public ResponseEntity<List<Integer>> traverseDfs(
-            @RequestBody @NotEmpty(message = ExceptionMessage.ADJACENCY_MATRIX_EMPTY) List<List<Integer>> input) {
+            @RequestBody @Validated AdjacencyBaseRequest request) {
         return ResponseEntity.ok(List.of());
     }
 }
