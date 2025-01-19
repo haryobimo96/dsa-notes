@@ -74,7 +74,8 @@ public class AdjacencyBFSServiceTest {
                 () -> adjacencyBFSService.traverseBfsResult(-5, List.of(List.of(1))));
         Assertions.assertThrows(
                 MatrixDimensionException.class,
-                () -> adjacencyBFSService.traverseBfsResult(2, List.of(List.of(1))));        Assertions.assertThrows(
+                () -> adjacencyBFSService.traverseBfsResult(2, List.of(List.of(1))));
+        Assertions.assertThrows(
                 MatrixDimensionException.class,
                 () -> adjacencyBFSService.traverseBfsResult(0, null));
         Assertions.assertThrows(
