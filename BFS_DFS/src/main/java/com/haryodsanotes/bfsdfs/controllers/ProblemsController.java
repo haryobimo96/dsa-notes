@@ -3,6 +3,7 @@ package com.haryodsanotes.bfsdfs.controllers;
 import com.haryodsanotes.bfsdfs.constants.ApiPath;
 import com.haryodsanotes.bfsdfs.dtos.AdjacencyBaseRequest;
 import com.haryodsanotes.bfsdfs.services.AdjacencyBFSService;
+import com.haryodsanotes.bfsdfs.services.AdjacencyDFSService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProblemsController {
     private final AdjacencyBFSService adjacencyBfsService;
+    private final AdjacencyDFSService adjacencyDFSService;
 
     @PostMapping(value = ApiPath.SUB_PATH_ADJACENCY_BFS)
     public ResponseEntity<List<Integer>> traverseBfs(
@@ -29,6 +31,7 @@ public class ProblemsController {
     @PostMapping(value = ApiPath.SUB_PATH_ADJACENCY_DFS)
     public ResponseEntity<List<Integer>> traverseDfs(
             @RequestBody @Validated AdjacencyBaseRequest request) {
-        return ResponseEntity.ok(List.of());
+        return ResponseEntity.ok(
+                adjacencyDFSService.traverseDfsResult(request.getStartIdx(), request.getMatrix()));
     }
 }

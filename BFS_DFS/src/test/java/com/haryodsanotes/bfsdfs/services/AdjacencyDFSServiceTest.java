@@ -14,23 +14,12 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @ExtendWith(MockitoExtension.class)
-public class AdjacencyBFSServiceTest {
+public class AdjacencyDFSServiceTest {
     @InjectMocks
-    AdjacencyBFSService adjacencyBFSService;
+    AdjacencyDFSService adjacencyDFSService;
 
-    static Stream<Arguments> generateDataAdjacencyBFS() {
+    static Stream<Arguments> generateDataAdjacencyDFS() {
         return Stream.of(
-                Arguments.of(3,
-                        List.of(
-                                List.of(0, 1, 1, 1, 0, 0),
-                                List.of(1, 0, 0, 0, 1, 0),
-                                List.of(1, 0, 0, 0, 0, 0),
-                                List.of(1, 0, 0, 0, 0, 1),
-                                List.of(0, 1, 0, 0, 0, 0),
-                                List.of(0, 0, 0, 1, 0, 0)
-                        ),
-                        List.of(3, 0, 5, 1, 2, 4)
-                ),
                 Arguments.of(0,
                         List.of(
                                 List.of(0, 1, 1, 1, 0, 0),
@@ -40,7 +29,7 @@ public class AdjacencyBFSServiceTest {
                                 List.of(0, 1, 0, 0, 0, 0),
                                 List.of(0, 0, 0, 1, 0, 0)
                         ),
-                        List.of(0, 1, 2, 3, 4, 5)
+                        List.of(0, 1, 4, 2, 3, 5)
                 ),
                 Arguments.of(5,
                         List.of(
@@ -51,16 +40,27 @@ public class AdjacencyBFSServiceTest {
                                 List.of(0, 1, 0, 0, 0, 0),
                                 List.of(0, 0, 0, 1, 0, 0)
                         ),
-                        List.of(5, 3, 0, 1, 2, 4)
+                        List.of(5, 3, 0, 1, 4, 2)
+                ),
+                Arguments.of(2,
+                        List.of(
+                                List.of(0, 1, 1, 1, 0, 0),
+                                List.of(1, 0, 0, 0, 1, 0),
+                                List.of(1, 0, 0, 0, 0, 0),
+                                List.of(1, 0, 0, 0, 0, 1),
+                                List.of(0, 1, 0, 0, 0, 0),
+                                List.of(0, 0, 0, 1, 0, 0)
+                        ),
+                        List.of(2, 0, 1, 4, 3, 5)
                 )
         );
     }
 
     @ParameterizedTest
-    @MethodSource("generateDataAdjacencyBFS")
+    @MethodSource("generateDataAdjacencyDFS")
     void checkReturnedValuesAdjacencyBFS(
             int startIdx, List<List<Integer>> matrix, List<Integer> expectedResult){
-        List<Integer> result = adjacencyBFSService.traverseBfsResult(startIdx, matrix);
+        List<Integer> result = adjacencyDFSService.traverseDfsResult(startIdx, matrix);
         Assertions.assertEquals(expectedResult.size(), result.size());
         for (int i = 0; i < result.size(); i++) {
             Assertions.assertEquals(expectedResult.get(i), result.get(i));
@@ -71,15 +71,15 @@ public class AdjacencyBFSServiceTest {
     void checkInvalidInputsInAdjacencyBFSFunctionCall() {
         Assertions.assertThrows(
                 MatrixDimensionException.class,
-                () -> adjacencyBFSService.traverseBfsResult(-5, List.of(List.of(1))));
+                () -> adjacencyDFSService.traverseDfsResult(-5, List.of(List.of(1))));
         Assertions.assertThrows(
                 MatrixDimensionException.class,
-                () -> adjacencyBFSService.traverseBfsResult(2, List.of(List.of(1))));
+                () -> adjacencyDFSService.traverseDfsResult(2, List.of(List.of(1))));
         Assertions.assertThrows(
                 MatrixDimensionException.class,
-                () -> adjacencyBFSService.traverseBfsResult(0, null));
+                () -> adjacencyDFSService.traverseDfsResult(0, null));
         Assertions.assertThrows(
                 MatrixDimensionException.class,
-                () -> adjacencyBFSService.traverseBfsResult(0, List.of(List.of(1, 2), List.of(1))));
+                () -> adjacencyDFSService.traverseDfsResult(0, List.of(List.of(1, 2), List.of(1))));
     }
 }
