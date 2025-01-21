@@ -10,7 +10,6 @@ import java.util.*;
 public class AdjacencyDFSService extends BaseService {
     private final List<Integer> result = new ArrayList<>();
     private final Set<Integer> traversedNode = new HashSet<>();
-    private final Stack<Integer> dataStore = new Stack<>();
 
     public List<Integer> traverseDfsResult(Integer idx, List<List<Integer>> matrix) {
         validateInput(idx, matrix);
@@ -24,13 +23,9 @@ public class AdjacencyDFSService extends BaseService {
         List<Integer> row = matrix.get(idx);
         traversedNode.add(idx);
         result.add(idx);
-        dataStore.add(idx);
 
         for (int i = 0; i < row.size(); i++) {
-            if (dataStore.isEmpty()) break;
             if (row.get(i) > 0 && !traversedNode.contains(i)) traverseDfs(i, matrix);
         }
-
-        dataStore.pop();
     }
 }
