@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 @NoArgsConstructor
 public class BaseService {
-    public void validateInput(Integer startIdx, List<List<Integer>> matrix) {
+    public void validateAdjacencyMatrixInput(Integer startIdx, List<List<Integer>> matrix) {
         if (!MatrixCheckerHelper.isAdjacencyMatrixValid(matrix))
             throw new MatrixDimensionException(ExceptionMessage.ADJACENCY_MATRIX_INVALID_DIMENSION);
         if (matrix.size() <= startIdx || startIdx < 0)

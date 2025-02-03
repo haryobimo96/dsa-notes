@@ -25,13 +25,13 @@ public class ProblemsController {
     public ResponseEntity<List<Integer>> traverseBfs(
             @RequestBody @Validated AdjacencyBaseRequest request) {
         return ResponseEntity.ok(
-                adjacencyBfsService.traverseBfsResult(request.getStartIdx(), request.getMatrix()));
+                adjacencyBfsService.traverseBfsMatrixResult(request.getStartIdx(), request.getMatrix()));
     }
 
     @PostMapping(value = ApiPath.SUB_PATH_ADJACENCY_DFS)
     public ResponseEntity<List<Integer>> traverseDfs(
             @RequestBody @Validated AdjacencyBaseRequest request) {
         return ResponseEntity.ok(
-                adjacencyDFSService.traverseDfsResult(request.getStartIdx(), request.getMatrix()));
+                adjacencyDFSService.traverseDfsMatrixResult(request.getStartIdx(), request.getMatrix()));
     }
 }

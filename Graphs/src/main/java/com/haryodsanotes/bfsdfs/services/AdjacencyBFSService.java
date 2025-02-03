@@ -12,16 +12,16 @@ public class AdjacencyBFSService extends BaseService {
     private final Set<Integer> traversedNode = new HashSet<>();
     private final Queue<Integer> dataStore = new ArrayDeque<>();
 
-    public List<Integer> traverseBfsResult(Integer idx, List<List<Integer>> matrix) {
-        validateInput(idx, matrix);
+    public List<Integer> traverseBfsMatrixResult(Integer idx, List<List<Integer>> matrix) {
+        validateAdjacencyMatrixInput(idx, matrix);
         result.add(idx);
-        traverseBfs(idx, matrix);
+        traverseBfsMatrix(idx, matrix);
         return result;
     }
 
     // O(V^2) time and space complexity since all node connection possibility
     // in each row must be examined
-    private void traverseBfs(Integer idx, List<List<Integer>> matrix) {
+    private void traverseBfsMatrix(Integer idx, List<List<Integer>> matrix) {
         List<Integer> row = matrix.get(idx);
         traversedNode.add(idx);
 
@@ -33,6 +33,6 @@ public class AdjacencyBFSService extends BaseService {
 
         Integer pollIdx = dataStore.poll();
         result.add(pollIdx);
-        traverseBfs(pollIdx, matrix);
+        traverseBfsMatrix(pollIdx, matrix);
     }
 }

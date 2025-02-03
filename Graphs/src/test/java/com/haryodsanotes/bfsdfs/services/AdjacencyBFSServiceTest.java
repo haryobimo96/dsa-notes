@@ -60,7 +60,7 @@ public class AdjacencyBFSServiceTest {
     @MethodSource("generateDataAdjacencyBFS")
     void checkReturnedValuesAdjacencyBFS(
             int startIdx, List<List<Integer>> matrix, List<Integer> expectedResult){
-        List<Integer> result = adjacencyBFSService.traverseBfsResult(startIdx, matrix);
+        List<Integer> result = adjacencyBFSService.traverseBfsMatrixResult(startIdx, matrix);
         Assertions.assertEquals(expectedResult.size(), result.size());
         for (int i = 0; i < result.size(); i++) {
             Assertions.assertEquals(expectedResult.get(i), result.get(i));
@@ -71,15 +71,15 @@ public class AdjacencyBFSServiceTest {
     void checkInvalidInputsInAdjacencyBFSFunctionCall() {
         Assertions.assertThrows(
                 MatrixDimensionException.class,
-                () -> adjacencyBFSService.traverseBfsResult(-5, List.of(List.of(1))));
+                () -> adjacencyBFSService.traverseBfsMatrixResult(-5, List.of(List.of(1))));
         Assertions.assertThrows(
                 MatrixDimensionException.class,
-                () -> adjacencyBFSService.traverseBfsResult(2, List.of(List.of(1))));
+                () -> adjacencyBFSService.traverseBfsMatrixResult(2, List.of(List.of(1))));
         Assertions.assertThrows(
                 MatrixDimensionException.class,
-                () -> adjacencyBFSService.traverseBfsResult(0, null));
+                () -> adjacencyBFSService.traverseBfsMatrixResult(0, null));
         Assertions.assertThrows(
                 MatrixDimensionException.class,
-                () -> adjacencyBFSService.traverseBfsResult(0, List.of(List.of(1, 2), List.of(1))));
+                () -> adjacencyBFSService.traverseBfsMatrixResult(0, List.of(List.of(1, 2), List.of(1))));
     }
 }
