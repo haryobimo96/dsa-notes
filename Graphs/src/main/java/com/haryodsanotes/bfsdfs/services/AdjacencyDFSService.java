@@ -17,6 +17,12 @@ public class AdjacencyDFSService extends BaseService {
         return result;
     }
 
+    public List<Integer> traverseDfsListResult(Integer idx, List<List<Integer>> list) {
+        validateAdjacencyInput(idx, list);
+        traverseDfsList(idx, list);
+        return result;
+    }
+
     // O(V^2) time and space complexity since all node connection possibility
     // in each row must be examined
     private void traverseDfsMatrix(Integer idx, List<List<Integer>> matrix) {
@@ -26,6 +32,18 @@ public class AdjacencyDFSService extends BaseService {
 
         for (int i = 0; i < row.size(); i++) {
             if (row.get(i) > 0 && !traversedNode.contains(i)) traverseDfsMatrix(i, matrix);
+        }
+    }
+
+    // O(V+E) time and O(V) space complexity since all node connection possibility
+    // in each row must be examined
+    private void traverseDfsList(Integer idx, List<List<Integer>> list) {
+        List<Integer> row = list.get(idx);
+        traversedNode.add(idx);
+        result.add(idx);
+
+        for (Integer rowIdx : row) {
+            if (!traversedNode.contains(rowIdx)) traverseDfsList(rowIdx, list);
         }
     }
 }
