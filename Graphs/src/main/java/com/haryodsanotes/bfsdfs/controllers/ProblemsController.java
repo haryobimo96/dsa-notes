@@ -18,20 +18,34 @@ import java.util.List;
 @RequestMapping(path = ApiPath.BFS_DFS)
 @RequiredArgsConstructor
 public class ProblemsController {
-    private final AdjacencyBFSService adjacencyBfsService;
+    private final AdjacencyBFSService adjacencyBFSService;
     private final AdjacencyDFSService adjacencyDFSService;
 
     @PostMapping(value = ApiPath.SUB_PATH_ADJACENCY_BFS)
     public ResponseEntity<List<Integer>> traverseBfs(
             @RequestBody @Validated AdjacencyBaseRequest request) {
         return ResponseEntity.ok(
-                adjacencyBfsService.traverseBfsResult(request.getStartIdx(), request.getMatrix()));
+                adjacencyBFSService.traverseBfsMatrixResult(request.getStartIdx(), request.getMatrix()));
     }
 
     @PostMapping(value = ApiPath.SUB_PATH_ADJACENCY_DFS)
     public ResponseEntity<List<Integer>> traverseDfs(
             @RequestBody @Validated AdjacencyBaseRequest request) {
         return ResponseEntity.ok(
-                adjacencyDFSService.traverseDfsResult(request.getStartIdx(), request.getMatrix()));
+                adjacencyDFSService.traverseDfsMatrixResult(request.getStartIdx(), request.getMatrix()));
+    }
+
+    @PostMapping(value = ApiPath.SUB_PATH_ADJACENCY_LIST_BFS)
+    public ResponseEntity<List<Integer>> traverseBfsList(
+            @RequestBody @Validated AdjacencyBaseRequest request) {
+        return ResponseEntity.ok(
+                adjacencyBFSService.traverseBfsListResult(request.getStartIdx(), request.getMatrix()));
+    }
+
+    @PostMapping(value = ApiPath.SUB_PATH_ADJACENCY_LIST_DFS)
+    public ResponseEntity<List<Integer>> traverseDfsList(
+            @RequestBody @Validated AdjacencyBaseRequest request) {
+        return ResponseEntity.ok(
+                adjacencyDFSService.traverseDfsListResult(request.getStartIdx(), request.getMatrix()));
     }
 }
