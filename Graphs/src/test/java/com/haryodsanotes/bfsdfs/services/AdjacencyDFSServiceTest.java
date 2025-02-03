@@ -94,6 +94,44 @@ public class AdjacencyDFSServiceTest {
         );
     }
 
+    static Stream<Arguments> generateDataDirectedAdjacencyDFSList() {
+        return Stream.of(
+                Arguments.of(0,
+                        List.of(
+                                List.of(1, 3),
+                                List.of(4),
+                                List.of(5, 4),
+                                List.of(1),
+                                List.of(3),
+                                List.of(5)
+                        ),
+                        List.of(0, 1, 4, 3)
+                ),
+                Arguments.of(2,
+                        List.of(
+                                List.of(1, 3),
+                                List.of(4),
+                                List.of(5, 4),
+                                List.of(1),
+                                List.of(3),
+                                List.of(5)  // beware of this self-reference part
+                        ),
+                        List.of(2, 5, 4, 3, 1)
+                )
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateDataDirectedAdjacencyDFSList")
+    void checkReturnedValuesDirectedAdjacencyDFSList(
+            int startIdx, List<List<Integer>> list, List<Integer> expectedResult){
+        List<Integer> result = adjacencyDFSService.traverseDfsListResult(startIdx, list);
+        Assertions.assertEquals(expectedResult.size(), result.size());
+        for (int i = 0; i < result.size(); i++) {
+            Assertions.assertEquals(expectedResult.get(i), result.get(i));
+        }
+    }
+
     @ParameterizedTest
     @MethodSource("generateDataAdjacencyDFSList")
     void checkReturnedValuesAdjacencyDFSList(
