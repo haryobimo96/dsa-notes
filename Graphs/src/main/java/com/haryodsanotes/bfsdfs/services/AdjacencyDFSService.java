@@ -11,6 +11,7 @@ public class AdjacencyDFSService extends BaseService {
     private final List<Integer> result = new ArrayList<>();
     private final Set<Integer> traversedNode = new HashSet<>();
     private final Stack<Integer> stack = new Stack<>();
+    private final Map<Integer, Integer> neighbours = new HashMap<>();
 
     public List<Integer> traverseDfsMatrixResult(Integer idx, List<List<Integer>> matrix) {
         validateAdjacencyMatrixInput(idx, matrix);
@@ -55,36 +56,33 @@ public class AdjacencyDFSService extends BaseService {
     }
 
     // Cormen Exercise 22.3-6
-    private void traverseDfsListUsingStack(Integer idx, List<List<Integer>> list) {
-        traversedNode.add(idx);
-        stack.add(idx);
-        result.add(idx);
-
-        List<Integer> currentRow = list.get(idx);
+    private void traverseDfsListUsingStack(Integer currentNode, List<List<Integer>> list) {
+        stack.add(currentNode);
+        result.add(currentNode);
+        // initialize selected index neighbour
+        neighbours.put(currentNode, 0);
 
         while (!stack.isEmpty()) {
-            int rowIdx = 0;
+            currentNode = stack.peek();
+            List<Integer> currentRow = list.get(currentNode);
+            int nextIdx = neighbours.get(currentNode);
 
-            // see if the node is already traversed, this would trigger the loop back
-            while (traversedNode.contains(currentRow.get(rowIdx))) {
-                rowIdx++;
-                if (rowIdx == currentRow.size()) break;
-            }
-
-            // loop back by popping last stack entry
-            if (rowIdx == currentRow.size()) {
+            // see if the parent node has all its children covered,
+            // will trigger the loop back if all children have been traversed
+            if (nextIdx >= currentRow.size()) {
                 stack.pop();
-                if (stack.isEmpty()) break;
-                currentRow = list.get(stack.peek());
                 continue;
             }
 
-            int currentIdx = currentRow.get(rowIdx);
-            traversedNode.add(currentIdx);
-            stack.add(currentIdx);
-            result.add(currentIdx);
+            // switch current node's child to other child
+            neighbours.replace(currentNode, nextIdx + 1);
+            int nextNode = currentRow.get(nextIdx);
 
-            currentRow = list.get(currentIdx);
+            if (!neighbours.containsKey(nextNode)) {
+                stack.add(nextNode);
+                result.add(nextNode);
+                neighbours.put(nextNode, 0);
+            }
         }
     }
 }
