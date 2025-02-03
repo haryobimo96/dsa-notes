@@ -122,6 +122,28 @@ public class AdjacencyDFSServiceTest {
     }
 
     @ParameterizedTest
+    @MethodSource("generateDataAdjacencyDFSList")
+    void checkReturnedValuesAdjacencyDFSListUsingStack(
+            int startIdx, List<List<Integer>> list, List<Integer> expectedResult){
+        List<Integer> result = adjacencyDFSService.traverseDfsListUsingStackResult(startIdx, list);
+        Assertions.assertEquals(expectedResult.size(), result.size());
+        for (int i = 0; i < result.size(); i++) {
+            Assertions.assertEquals(expectedResult.get(i), result.get(i));
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateDataDirectedAdjacencyDFSList")
+    void checkReturnedValuesDirectedAdjacencyDFSListUsingStack(
+            int startIdx, List<List<Integer>> list, List<Integer> expectedResult){
+        List<Integer> result = adjacencyDFSService.traverseDfsListUsingStackResult(startIdx, list);
+        Assertions.assertEquals(expectedResult.size(), result.size());
+        for (int i = 0; i < result.size(); i++) {
+            Assertions.assertEquals(expectedResult.get(i), result.get(i));
+        }
+    }
+
+    @ParameterizedTest
     @MethodSource("generateDataDirectedAdjacencyDFSList")
     void checkReturnedValuesDirectedAdjacencyDFSList(
             int startIdx, List<List<Integer>> list, List<Integer> expectedResult){
