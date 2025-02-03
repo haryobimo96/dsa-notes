@@ -56,11 +56,60 @@ public class AdjacencyBFSServiceTest {
         );
     }
 
+    static Stream<Arguments> generateDataAdjacencyBFSList() {
+        return Stream.of(
+                Arguments.of(3,
+                        List.of(
+                                List.of(1, 2, 3),
+                                List.of(0, 4),
+                                List.of(0),
+                                List.of(0, 5),
+                                List.of(1),
+                                List.of(3)
+                        ),
+                        List.of(3, 0, 5, 1, 2, 4)
+                ),
+                Arguments.of(0,
+                        List.of(
+                                List.of(1, 2, 3),
+                                List.of(0, 4),
+                                List.of(0),
+                                List.of(0, 5),
+                                List.of(1),
+                                List.of(3)
+                        ),
+                        List.of(0, 1, 2, 3, 4, 5)
+                ),
+                Arguments.of(5,
+                        List.of(
+                                List.of(1, 2, 3),
+                                List.of(0, 4),
+                                List.of(0),
+                                List.of(0, 5),
+                                List.of(1),
+                                List.of(3)
+                        ),
+                        List.of(5, 3, 0, 1, 2, 4)
+                )
+        );
+    }
+
     @ParameterizedTest
     @MethodSource("generateDataAdjacencyBFS")
     void checkReturnedValuesAdjacencyBFS(
             int startIdx, List<List<Integer>> matrix, List<Integer> expectedResult){
         List<Integer> result = adjacencyBFSService.traverseBfsMatrixResult(startIdx, matrix);
+        Assertions.assertEquals(expectedResult.size(), result.size());
+        for (int i = 0; i < result.size(); i++) {
+            Assertions.assertEquals(expectedResult.get(i), result.get(i));
+        }
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateDataAdjacencyBFSList")
+    void checkReturnedValuesAdjacencyBFSList(
+            int startIdx, List<List<Integer>> list, List<Integer> expectedResult){
+        List<Integer> result = adjacencyBFSService.traverseBfsListResult(startIdx, list);
         Assertions.assertEquals(expectedResult.size(), result.size());
         for (int i = 0; i < result.size(); i++) {
             Assertions.assertEquals(expectedResult.get(i), result.get(i));
@@ -81,5 +130,15 @@ public class AdjacencyBFSServiceTest {
         Assertions.assertThrows(
                 MatrixDimensionException.class,
                 () -> adjacencyBFSService.traverseBfsMatrixResult(0, List.of(List.of(1, 2), List.of(1))));
+    }
+
+    @Test
+    void checkInvalidInputsInAdjacencyDFSListFunctionCall() {
+        Assertions.assertThrows(
+                MatrixDimensionException.class,
+                () -> adjacencyBFSService.traverseBfsListResult(-5, List.of(List.of(1))));
+        Assertions.assertThrows(
+                MatrixDimensionException.class,
+                () -> adjacencyBFSService.traverseBfsListResult(2, List.of(List.of(1))));
     }
 }
